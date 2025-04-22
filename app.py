@@ -33,7 +33,7 @@ with tab1:
             if method == "Noise-based":
                 arr = np.array(img, dtype=np.uint8)
                 enc_arr, tkey = TripathiBuffer.encrypt(arr, password)
-                st.image(enc_arr, caption="Encrypted Image", use_column_width=True)
+                st.image(enc_arr, caption="Encrypted Image", use_container_width=True)
                 st.download_button("⬇ Download Encrypted PNG", np_to_png_bytes(enc_arr), "encrypted.png")
                 tkey_json = json.dumps(tkey)
                 st.download_button("⬇ Download tkey (JSON)", tkey_json, "tkey_noise.json")
