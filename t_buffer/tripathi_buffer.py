@@ -87,8 +87,8 @@ class TripathiBuffer:
         # Resize both images to minimal common dimensions
         min_w = min(img.width, keyimg.width)
         min_h = min(img.height, keyimg.height)
-        img_r = img.resize((min_w, min_h), Image.ANTIALIAS)
-        key_r = keyimg.resize((min_w, min_h), Image.ANTIALIAS)
+        img_r = img.resize((min_w, min_h), Image.Resampling.LANCZOS)
+        key_r = keyimg.resize((min_w, min_h), Image.Resampling.LANCZOS)
 
         img_arr = np.array(img_r.convert("RGB"), dtype=np.uint8)
         key_arr = np.array(key_r.convert("RGB"), dtype=np.uint8)
@@ -104,7 +104,7 @@ class TripathiBuffer:
     def decrypt_from_image(cls, tkey: dict, user_key: str, keyimg: Image.Image) -> np.ndarray:
         shape = tkey["shape"]
         expected_h, expected_w, _ = shape
-        key_r = keyimg.resize((expected_w, expected_h), Image.ANTIALIAS)
+        key_r = keyimg.resize((expected_w, expected_h), Image.Resampling.LANCZOS)
 
         key_arr = np.array(key_r.convert("RGB"), dtype=np.uint8)
         diff = cls.xor_deobfuscate(tkey["obf_data"], shape, user_key).astype(int)
